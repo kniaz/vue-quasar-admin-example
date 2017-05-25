@@ -37,8 +37,8 @@
       </div>
       <div class="card-content bg-white ">
         <div class="stacked-label">
-          <input required class="full-width" type="email" v-model="email">
-          <label>Email</label>
+          <input required class="full-width" type="text" v-model="username">
+          <label>Username</label>
         </div>
         <div class="stacked-label">
           <input required class="full-width" type="password" v-model="password">
@@ -87,6 +87,8 @@
   import Vivus from 'vivus'
   import logoData from './logoData'
   import { Platform } from 'quasar'
+  import axios from 'axios'
+
   export default {
     mounted () {
       this.setLayoutNeeded(false)
@@ -115,8 +117,8 @@
       return {
         logos: Object.keys(logoData),
         logo: 'Digitalizer',
-        email: 'quasar@admin.com',
-        password: '123456',
+        username: 'admin',
+        password: 'admin',
         bgColor: 'purple',
         toneColor: 10,
         colors: ['purple', 'blue', 'red', 'green', 'amber'],
@@ -129,9 +131,21 @@
     methods: {
       ...mapMutations(['setLayoutNeeded', 'setIsLoginPage']),
       login () {
-        this.setLayoutNeeded(true)
-        this.setIsLoginPage(false)
-        this.$router.push('/')
+        const username = this.username;
+        const password = this.password;
+        axios.post('http://localhost:8081/users/login', { username, password})
+            .then(function (response) {
+              this.setLayoutNeeded(true)
+              this.setIsLoginPage(false)
+              this.$router.push('/')
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+
+
+        console.log(this)
+
       },
       startAnimation () {
         this.vivus = new Vivus('logo', {
