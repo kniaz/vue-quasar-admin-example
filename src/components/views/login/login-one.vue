@@ -134,12 +134,6 @@
         const username = this.username;
         const password = this.password;
 
-          axios({
-              method: 'post',
-              url: '/user/12345',
-              data: { username, password }
-          });
-
         axios.post('http://localhost:8081/users/login', { username, password})
             .then((response) => {
               this.setLayoutNeeded(true)
