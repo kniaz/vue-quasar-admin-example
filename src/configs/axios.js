@@ -36,6 +36,16 @@ let clients = {
   }
 }
 
+axios.interceptors.response.use(function (response) {
+  if (!response.data.ok) {
+    return Promise.reject(response.data.result)
+  }
+  return response.result
+}, function (error) {
+  // Do something with response error
+  return Promise.reject(error)
+})
+
 export default (Vue) => {
   Object.defineProperties(Vue.prototype, clients)
 }

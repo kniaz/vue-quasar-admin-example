@@ -133,13 +133,20 @@
       login () {
         const username = this.username;
         const password = this.password;
+
+          axios({
+              method: 'post',
+              url: '/user/12345',
+              data: { username, password }
+          });
+
         axios.post('http://localhost:8081/users/login', { username, password})
-            .then(function (response) {
+            .then((response) => {
               this.setLayoutNeeded(true)
               this.setIsLoginPage(false)
               this.$router.push('/')
             })
-            .catch(function (error) {
+            .catch((error) => {
               console.log(error);
             });
 
