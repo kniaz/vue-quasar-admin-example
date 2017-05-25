@@ -38,7 +38,7 @@ let clients = {
 
 axios.interceptors.response.use(function (response) {
   if (!response.data.ok) {
-    return Promise.reject(response.data.result)
+    return Promise.reject(response.data.errors)
   }
   return response.result
 }, function (error) {
